@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ -z $image ]; then
+    image="msr_ros/ros_melodic_armhf"
+fi
+
+sudo docker run -it -v "$PWD":/ros_ws "$image"  \
+     sh -c "catkin_make_isolated -C /ros_ws -DCMAKE_TOOLCHAIN_FILE=/toolchain.cmake --build /ros_ws/armhf_build --devel /ros_ws/armhf_devel --install-space /ros_ws/armhf_install --install && chown -R $uid:$gid /ros_ws/armhf_*"
