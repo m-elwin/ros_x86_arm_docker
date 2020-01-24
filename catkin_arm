@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-image="msr_ros/x86_to_arm"
-sudo docker run -it --rm --user "$(id -u):$(id -g)" -v "$PWD":/ros_ws "$image"  sh -c \
-       "catkin_make_isolated -C /ros_ws -DCMAKE_TOOLCHAIN_FILE=/toolchain.cmake --build /ros_ws/armhf_build --devel /ros_ws/armhf_devel --install-space /ros_ws/armhf_install --install"
+cd /ros_ws
+catkin_make -DCMAKE_TOOLCHAIN_FILE=/toolchain.cmake -DCMAKE_INSTALL_PREFIX=arm_install -DCATKIN_DEVEL_PREFIX=arm_dev --build=arm_build $@

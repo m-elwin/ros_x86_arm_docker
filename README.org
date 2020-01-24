@@ -5,32 +5,33 @@ is on dockerhub.
 
 * Usage
 1. First time, in your workspace, do
-   =docker run msr_ros/x86_to_arm > catkin_arm && chmod 755 catkin_arm=
-   This will create a script called =catkin_arm= in your workspace
-   - This is not workspace specific, so you can store it somewhere on your path if you want
-   - If you are not in the docker group, this script will run docker as root via sudo
-     - The script is only a one line convenience function around a docker run command
-2. Use =./catkin_arm= to build your workspace (using =catkin_make_isolated=).
-   The =armhf_build= =armhf_devel= and =armhf_install= workspaced will be created.
-3. If your ros packages are setup to be installable you should 
-   be able to run your code by copying =armhf_install=  to your arm computer
-   (such as a raspberry pi)
+   =docker run reem17/ros_x86_to_arm > arm && chmod 755 arm=
+   This will create a script called =arm= in your workspace that will
+   1. Mount the current working directory in the docker container
+   2. Run the docker container with your user and group id
+   3. Run any command specified as arguments
+   4. The script is one line, to run docker, but it needs root access
+   5. =./arm bash= will bring you into the container and your workspace is mounted at /ros_ws
+   6. You will get an error about "groups: cannot find name for". this is okay
+2. Use =./arm catkin_arm= to build your workspace with =catkin_make=
+   Use =./arm catkin_arm_isolated= to build your workspace with =catkin_make_isolated=
 
 * Building the Docker image
-1. Clone this repository
-2. =apt install qemu-user-static=
-3. It seems that either I'm setting this up wrong or their is an ubuntu bug,
-   but to get this working I had to follow the
-   intstructions here =https://github.com/computermouth/qemu-static-conf=
-   - Essentially, this allows docker to run arm binaries.
+1. Clone https://github.com:m-elwin/ros_x86_arm_docker
+2. Ensure you can run arm binaries with qemu:
+   -=apt install qemu-user-static=
+   -It seems you need this repository as well =https://github.com/computermouth/qemu-static-conf=
+   - Essentially, this allows docker to run arm binaries. Looks like the files are
+     missing from Ubuntu 18.04
 4. Next build the docker file as usual
-   =docker build --tag msr_ros/x86_to_arm .=
+   =docker build .=
 
 * How it works
 1. The docker image is based off of =arm32v7/ros:melodic-ros-core-bionic=,
    which contains a minimal arm based ros install. 
    - All of the binaries in that image are built for arm.
-2. The dockerfile here enables =multiarch= support for =amd64=
+   - I also install ros-melodic-desktop full (arm edition) in the container
+2. The dockerfile enables =multiarch= support for =amd64=
    and then installs =amd64= versions of libraries and executables
    needed during the build process
    - This includes an =amd64= to =armhf= cross compiler
@@ -43,7 +44,10 @@ is on dockerhub.
    binaries used in the compilation process are x86
  
 * Alternative ideas  
-- Staring from x86 ros image and installing necessary libraries
+- I initially wanted to start from  the x86 ros image and installing necessary arm libraries
+- However, figuring out what these were and installing them without clobbering any necessary
+  x86 executables was difficult (though in theory it can be done and would be better
+  because then you wouldn't need qemu-arm-static to build the docker container)
   
 
 

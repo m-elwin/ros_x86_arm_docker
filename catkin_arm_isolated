@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+catkin_make_isolated -C /ros_ws -DCMAKE_TOOLCHAIN_FILE=/toolchain.cmake --build /ros_ws/arm_build --devel /ros_ws/arm_devel --install-space /ros_ws/arm_install --install $@
