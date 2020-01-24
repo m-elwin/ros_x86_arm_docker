@@ -33,3 +33,5 @@ COPY raspi-toolchain.cmake /toolchain.cmake
 RUN mkdir /ros_ws
 VOLUME /ros_ws
 
+COPY catkin_arm /catkin_arm
+CMD ["cat", "catkin_arm"]

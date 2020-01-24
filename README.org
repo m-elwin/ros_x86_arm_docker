@@ -5,8 +5,11 @@ is on dockerhub.
 
 * Usage
 1. First time, in your workspace, do
-   =docker run msr_ros/x86_to_arm=
+   =docker run msr_ros/x86_to_arm > catkin_arm && chmod 755 catkin_arm=
    This will create a script called =catkin_arm= in your workspace
+   - This is not workspace specific, so you can store it somewhere on your path if you want
+   - If you are not in the docker group, this script will run docker as root via sudo
+     - The script is only a one line convenience function around a docker run command
 2. Use =./catkin_arm= to build your workspace (using =catkin_make_isolated=).
    The =armhf_build= =armhf_devel= and =armhf_install= workspaced will be created.
 3. If your ros packages are setup to be installable you should 
