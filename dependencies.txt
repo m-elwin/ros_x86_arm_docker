@@ -27,6 +27,9 @@ make
 bash
 base-files
 debianutils
+perm
+libgomp1
+libstdc++6
 gcc-arm-linux-gnueabihf
 cpp-arm-linux-gnueabihf
 cpp-7-arm-linux-gnueabihf
@@ -37,7 +40,6 @@ gcc-7-arm-linux-gnueabihf
 binutils-arm-linux-gnueabihf
 binutils-common
 libcc1-0
-libstdc++6
 libgcc-7-dev-armhf-cross
 gcc-7-cross-base
 libasan4-armhf-cross

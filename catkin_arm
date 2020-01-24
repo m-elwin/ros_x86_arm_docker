@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ -z $image ]; then
-    image="msr_ros/ros_melodic_armhf"
+    image="msr_ros/x86_to_arm"
 fi
 
 sudo docker run -it -v "$PWD":/ros_ws "$image"  \
