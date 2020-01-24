@@ -1,0 +1,46 @@
+* Overview
+This creates a Docker image useful for cross compiling binaries for
+the armhf version of ROS on an x86-64 computer.  The docker image
+is on dockerhub. 
+
+* Usage
+1. First time, in your workspace, do
+   =docker run msr_ros/x86_to_arm=
+   This will create a script called =catkin_arm= in your workspace
+2. Use =./catkin_arm= to build your workspace (using =catkin_make_isolated=).
+   The =armhf_build= =armhf_devel= and =armhf_install= workspaced will be created.
+3. If your ros packages are setup to be installable you should 
+   be able to run your code by copying =armhf_install=  to your arm computer
+   (such as a raspberry pi)
+
+* Building the Docker image
+1. Clone this repository
+2. =apt install qemu-user-static=
+3. It seems that either I'm setting this up wrong or their is an ubuntu bug,
+   but to get this working I had to follow the
+   intstructions here =https://github.com/computermouth/qemu-static-conf=
+   - Essentially, this allows docker to run arm binaries.
+4. Next build the docker file as usual
+   =docker build --tag msr_ros/x86_to_arm .=
+
+* How it works
+1. The docker image is based off of =arm32v7/ros:melodic-ros-core-bionic=,
+   which contains a minimal arm based ros install. 
+   - All of the binaries in that image are built for arm.
+2. The dockerfile here enables =multiarch= support for =amd64=
+   and then installs =amd64= versions of libraries and executables
+   needed during the build process
+   - This includes an =amd64= to =armhf= cross compiler
+   - The packages are installed by overriding the dependencies.
+     - Since Ubuntu supports multiple library architectures, the 
+       libraries are installed side-by-side
+     - Since ubuntu does not support multiple binaries,
+       the arm binaries are overwritten with x86 binaries
+3. Now, both arm and x86 libraries are installed but the
+   binaries used in the compilation process are x86
+ 
+* Alternative ideas  
+- Staring from x86 ros image and installing necessary libraries
+  
+
+
