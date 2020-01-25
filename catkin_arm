@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-cd /ros_ws
 catkin_make -DCMAKE_TOOLCHAIN_FILE=/toolchain.cmake -DCMAKE_INSTALL_PREFIX=arm_install -DCATKIN_DEVEL_PREFIX=arm_dev --build=arm_build $@

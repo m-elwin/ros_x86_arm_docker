@@ -34,4 +34,5 @@ COPY catkin_arm /usr/bin/catkin_arm
 COPY catkin_arm_isolated /usr/bin/catkin_arm_isolated
 COPY arm /arm
 RUN chmod 666 /etc/group /etc/passwd
+WORKDIR /ros_ws
 CMD ["cat", "/arm"]
