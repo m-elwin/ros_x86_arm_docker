@@ -1,7 +1,7 @@
 FROM arm32v7/ros:melodic-ros-core-bionic
 COPY sources.list /etc/apt/sources.list
 RUN dpkg --add-architecture amd64
-RUN apt-get update -yq && apt-get install -yq ros-melodic-desktop
+RUN apt-get update -yq && apt-get install -yq ros-melodic-desktop-full
 RUN apt-get upgrade -yq
 # Now we have all up to date arm packages.
 # Next, stuff is broken but lets use native apt
