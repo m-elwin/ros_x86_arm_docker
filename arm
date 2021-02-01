@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-sudo docker run -it -u $(id -u):$(id -g) -v "$PWD":/ros_ws "reem17/ros_x86_to_arm"  $@
+sudo docker run -it -u $(id -u):$(id -g) -v "$PWD":/ros_ws "reem17/ros_x86_to_arm:noetic"  $@
